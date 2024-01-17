@@ -75,7 +75,13 @@ module Cachy
     (locales+[false]).each do |locale|
       without_locale = (locale==false)
       args_with_locale = args + [options.merge(:locale=>locale, :without_locale=>without_locale)]
-      cache_store.delete key(*args_with_locale)
+      the_key = key(*args_with_locale)
+      if the_key.include?('*')
+        # Pattern delete
+        cache_store.keys(the_key).each{|k| cache_store.delete k}
+      else
+        cache_store.delete the_key
+      end
     end
   end
 
