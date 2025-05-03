@@ -8,12 +8,10 @@ class Cachy::MonetaWrapper < Cachy::Wrapper
       options.store(:expires, options[:expires_in].to_i)
       options.delete(:expires_in)
     end
-    ::Yito::Logger.instance.logger.debug  "MONETA-WRAPPER:: write #{key} options: #{options.inspect}"
     @wrapped.store(key, result, options)
   end
 
   def delete(key, options={})
-    ::Yito::Logger.instance.logger.debug  "MONETA-WRAPPER:: delete #{key} options: #{options.inspect}"
     @wrapped.delete(key)
   end
 
